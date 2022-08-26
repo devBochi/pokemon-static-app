@@ -54,15 +54,17 @@ export const PokemonByNamePage = ({pokemon}:Props) => {
         </Grid>
         <Grid xs={12} sm={8}>
           <Card>
-            <Card.Header css={{display: 'flex', justifyContent: 'space-between'}}>
-              <Text transform="capitalize" h1>{pokemon.name}</Text>
-              <Button
-                color="gradient"
-                ghost={!isInFavorites}
-                onPress={onToggleFavorite}
-              >
-                {isInFavorites ? 'En Favoritos' : 'Guardar en Favoritos' }
-              </Button>
+            <Card.Header css={{display: 'flex', justifyContent: 'space-between', alignContent: 'flex-start'}}>
+              <Container display="flex" direction="row" alignItems="center">
+                <Text transform="capitalize" h1>{pokemon.name}</Text>
+                <Button
+                  color="gradient"
+                  ghost={!isInFavorites}
+                  onPress={onToggleFavorite}
+                >
+                  {isInFavorites ? 'En Favoritos' : 'Guardar en Favoritos' }
+                </Button>
+              </Container>
             </Card.Header>
             <Card.Body>
               <Text size={30}>Sprites:</Text>
