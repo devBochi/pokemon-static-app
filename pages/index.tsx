@@ -20,7 +20,6 @@ const HomePage: NextPage<Props> = ({pokemons}) => {
               <PokemonCard key={pokemon.id} pokemon={pokemon} />
             ))
           }
-          <li></li>
         </Grid.Container>
       </Layout>
     </>
