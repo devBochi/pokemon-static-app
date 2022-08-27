@@ -55,14 +55,16 @@ export const PokemonPage = ({pokemon}:Props) => {
         <Grid xs={12} sm={8}>
           <Card>
             <Card.Header css={{display: 'flex', justifyContent: 'space-between'}}>
-              <Text transform="capitalize" h1>{pokemon.name}</Text>
-              <Button
-                color="gradient"
-                ghost={!isInFavorites}
-                onPress={onToggleFavorite}
-              >
-                {isInFavorites ? 'En Favoritos' : 'Guardar en Favoritos' }
-              </Button>
+            <Container display="flex" direction="row" alignItems="center">
+                  <Text transform="capitalize" h1>{pokemon.name}</Text>
+                  <Button
+                    color="gradient"
+                    ghost={!isInFavorites}
+                    onPress={onToggleFavorite}
+                  >
+                    {isInFavorites ? 'En Favoritos' : 'Guardar en Favoritos' }
+                  </Button>
+                </Container>
             </Card.Header>
             <Card.Body>
               <Text size={30}>Sprites:</Text>
@@ -109,7 +111,7 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
     paths: pokemons151.map( id => ({
       params: {id}
     })),
-    fallback: false
+    fallback: 'blocking'
   }
 }
 
@@ -117,9 +119,21 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
  
   const {id} = params as {id: string};
 
+  const pokemon = await getPokemonInfo(id)
+
+  if (!pokemon) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+
   return {
     props: {
-      pokemon: await getPokemonInfo(id)
-    }
+      pokemon
+    },
+    revalidate: 86400
   }
 }
